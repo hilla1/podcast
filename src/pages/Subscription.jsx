@@ -1,18 +1,18 @@
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import { useIdentityContext } from 'react-netlify-identity'; // Corrected import
-import { useNavigate } from 'react-router-dom';
+import { useIdentityContext } from 'react-netlify-identity';
+import { useHistory } from 'react-router-dom'; 
 import { useState } from 'react';
 
 const Subscription = () => {
   const { user } = useIdentityContext();
-  const navigate = useNavigate();
+  const history = useHistory(); // Replace useNavigate with useHistory
   const [subscribed, setSubscribed] = useState(false);
 
   if (!user) return <div>Please <a href="/signin">sign in</a> to subscribe.</div>;
 
   const createSubscription = (data, actions) => {
     return actions.subscription.create({
-      plan_id: 'P-XXXXXX', // Replace with your PayPal plan ID for 500 KES/4 weeks
+      plan_id: 'P-XXXXXX', // Replace with your PayPal plan ID
     });
   };
 
@@ -25,7 +25,7 @@ const Subscription = () => {
       });
       setSubscribed(true);
       alert('Subscription successful! Access premium content.');
-      navigate('/backstage');
+      history.push('/backstage'); // Use history.push instead of navigate
     });
   };
 

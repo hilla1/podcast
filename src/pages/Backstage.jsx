@@ -1,6 +1,6 @@
-import { useIdentityContext } from 'react-netlify-identity'; 
 import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useIdentityContext } from 'react-netlify-identity';
+import { Redirect } from 'react-router-dom'; // Uses Redirect for navigation
 
 const Backstage = () => {
   const { user } = useIdentityContext();
@@ -23,7 +23,7 @@ const Backstage = () => {
   }, [user]);
 
   if (loading) return <div>Loading...</div>;
-  if (!user || !isSubscribed) return <Navigate to="/subscription" replace />;
+  if (!user || !isSubscribed) return <Redirect to="/subscription" />;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
