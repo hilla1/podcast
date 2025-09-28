@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Economy Trends 2025",
+    "description": "Latest economic insights...",
+    "image": "https://example.com/economy.jpg",
+    "author": "John Doe",
+    "category": "economy",
+    "content": "Full article text here. Long enough for scroll test.",
+    "views": 100,
+    "approved": true,
+    "isPremium": false
+  },
+  {
+    "id": 2,
+    "title": "Tech Innovations",
+    "description": "AI in daily life...",
+    "image": "https://example.com/tech.jpg",
+    "author": "Jane Smith",
+    "category": "tech",
+    "content": "Premium content locked.",
+    "views": 50,
+    "approved": true,
+    "isPremium": true
+  }
+]
