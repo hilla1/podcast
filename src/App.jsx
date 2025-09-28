@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useEffect } from 'react';
 import Home from './pages/Home';
@@ -11,14 +11,14 @@ import About from './pages/About';
 import SignIn from './pages/SignIn';
 import Subscription from './pages/Subscription';
 import Backstage from './pages/Backstage';
-import SubmitBlog from './pages/SubmitBlog';
+import SubmitBlog from './components/SubmitBlog';
 import { FiHome, FiMic, FiEdit3, FiHeadphones, FiInfo, FiUser } from 'react-icons/fi';
 
 function App() {
   const { user } = useIdentityContext();
 
   useEffect(() => {
-    window.netlifyIdentity.init({ fallback: true }); // Initialize Netlify Identity widget
+    window.netlifyIdentity.init({ fallback: true });
   }, []);
 
   return (
@@ -45,19 +45,19 @@ function App() {
             </div>
           </div>
         </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/podcast" element={<Podcast />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
-          <Route path="/author/:name" element={<AuthorPage />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/subscription" element={<Subscription />} />
-          <Route path="/backstage" element={<Backstage />} />
-          <Route path="/submit-blog" element={<SubmitBlog />} />
-        </Routes>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/podcast" component={Podcast} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/blog/:id" component={BlogPost} />
+          <Route path="/author/:name" component={AuthorPage} />
+          <Route path="/support" component={Support} />
+          <Route path="/about" component={About} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="/subscription" component={Subscription} />
+          <Route path="/backstage" component={Backstage} />
+          <Route path="/submit-blog" component={SubmitBlog} />
+        </Switch>
       </div>
     </Router>
   );
