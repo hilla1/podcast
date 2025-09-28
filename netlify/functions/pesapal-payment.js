@@ -1,27 +1,32 @@
-// Requires pesapaljs-v3: npm i pesapaljs-v3
-// But for now, placeholder - replace with actual API call
-const Pesapal = require('pesapaljs-v3'); // Adjust import
+const { Pesapal } = require('pesapaljs-v3');
 
-exports.handler = async (event) => {
+exports.handler = async function (event, context) {
   const { amount, userId } = JSON.parse(event.body);
-  // Pesapal setup with your keys
+
   const pesapal = new Pesapal({
     consumerKey: process.env.PESAPAL_CONSUMER_KEY,
     consumerSecret: process.env.PESAPAL_CONSUMER_SECRET,
+    environment: 'sandbox', // or 'live'
   });
 
   try {
-    const order = await pesapal.submitOrder({
+    const payment = await pesapal.submitOrder({
+      id: `order-${userId}-${Date.now()}`,
+      currency: 'KES',
       amount: amount,
-      description: 'Premium Subscription',
-      callback_url: `${process.env.NETLIFY_URL}/subscription/callback`,
-      notification_id: 12345, // IPN
+      description: 'Podcast Subscription',
+      callback_url: `${process.env.VITE_NETLIFY_URL}/subscription`,
+      user_id: userId,
     });
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ url: order.redirect_url }),
+      body: JSON.stringify({ url: payment.redirect_url }),
     };
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error }) };
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Payment initiation failed' }),
+    };
   }
 };
