@@ -11,7 +11,7 @@ import About from './pages/About';
 import SignIn from './pages/SignIn';
 import Subscription from './pages/Subscription';
 import Backstage from './pages/Backstage';
-import SubmitBlog from './components/SubmitBlog';
+import SubmitBlog from './pages/SubmitBlog';
 import { FiHome, FiMic, FiEdit3, FiHeadphones, FiInfo, FiUser } from 'react-icons/fi';
 
 function App() {
