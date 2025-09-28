@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import { useIdentityContext } from 'react-netlify-identity'; 
-import { useNavigate } from 'react-router-dom';
+import { useIdentityContext } from 'react-netlify-identity';
+import { useHistory } from 'react-router-dom'; // Use useHistory
 
 const SubmitBlog = () => {
   const { user } = useIdentityContext();
-  const navigate = useNavigate();
+  const history = useHistory(); // Replace useNavigate with useHistory
   const [formData, setFormData] = useState({ title: '', description: '', content: '', image: '', category: 'economy', author: '' });
   const [submitting, setSubmitting] = useState(false);
 
-  if (!user) return <div>Please sign in to submit. <button onClick={() => navigate('/signin')}>Sign In</button></div>;
+  if (!user) return <div>Please sign in to submit. <button onClick={() => history.push('/signin')}>Sign In</button></div>;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     formData.author = user.user_metadata.full_name || user.email;
-    formData.approved = false; // Pending approval
+    formData.approved = false;
 
     try {
       await fetch('/.netlify/functions/submit-blog', {
@@ -23,7 +23,7 @@ const SubmitBlog = () => {
         body: JSON.stringify(formData),
       });
       alert('Submitted for approval!');
-      navigate('/blog');
+      history.push('/blog'); // Use history.push
     } catch (err) {
       alert('Error submitting');
     }

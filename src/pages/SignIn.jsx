@@ -1,14 +1,14 @@
-import { useIdentityContext } from 'react-netlify-identity'; // Corrected import
-import { useNavigate } from 'react-router-dom';
+import { useIdentityContext } from 'react-netlify-identity';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom'; // Use useHistory instead of useNavigate
 
 const SignIn = () => {
   const { user } = useIdentityContext();
-  const navigate = useNavigate();
+  const history = useHistory(); // Replace useNavigate with useHistory
 
   useEffect(() => {
-    if (user) navigate('/');
-  }, [user, navigate]);
+    if (user) history.push('/'); // Use history.push instead of navigate
+  }, [user, history]);
 
   return (
     <div className="max-w-md mx-auto px-4 py-8">
