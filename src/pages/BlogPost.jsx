@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useIdentityContext } from 'react-netlify-identity'; // Corrected import
+import { useParams, useHistory } from 'react-router-dom'; 
+import { useIdentityContext } from 'react-netlify-identity';
 import { FiVolume2, FiAlertTriangle } from 'react-icons/fi';
 import BlogPostCard from '../components/BlogPostCard';
 
 const BlogPost = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const history = useHistory(); 
   const { user } = useIdentityContext();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,16 +39,16 @@ const BlogPost = () => {
         setScrollCount(prev => {
           const newCount = prev + 1;
           if (newCount >= 2 && (!user || post?.isPremium)) {
-            navigate('/signin');
+            history.push('/signin'); // Use history.push instead of navigate
           }
           return newCount;
         });
         scrollRef.current = scrollTop;
-      }
+      };
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [user, post, navigate]);
+  }, [user, post, history]);
 
   const toggleAudiobook = () => {
     if (!post) return;
@@ -76,7 +76,7 @@ const BlogPost = () => {
         {isPremiumLocked ? (
           <div className="text-center py-8">
             <FiAlertTriangle className="mx-auto text-4xl text-yellow-600 mb-4" />
-            <p>Premium content. <button onClick={() => navigate('/subscription')} className="text-blue-600">Subscribe now</button></p>
+            <p>Premium content. <button onClick={() => history.push('/subscription')} className="text-blue-600">Subscribe now</button></p>
           </div>
         ) : (
           <>
