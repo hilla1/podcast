@@ -12,8 +12,8 @@
   "dependencies": {
     "@paypal/react-paypal-js": "^8.9.1",
     "netlify-identity-widget": "^1.9.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-icons": "^5.5.0",
     "react-netlify-identity": "^0.2.7",
     "react-router-dom": "^7.9.3",
